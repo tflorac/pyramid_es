@@ -226,7 +226,8 @@ class ElasticQuery(object):
             }
         })
 
-    def add_date_aggregate(self, name, field, bucket='date_histogram', interval='month', format='MM/yyyy'):
+    def add_date_aggregate(self, name, field, bucket='date_histogram',
+                           interval='month', format='MM/yyyy'):
         """
         Add a date aggregate
         """
