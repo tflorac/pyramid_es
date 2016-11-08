@@ -71,5 +71,12 @@ class ElasticResult(object):
         return self.raw['facets']
 
     @property
+    def aggregations(self):
+        """
+        Return aggregations returned by this search query
+        """
+        return self.raw['aggregations']
+
+    @property
     def suggests(self):
         return self.raw['suggest']

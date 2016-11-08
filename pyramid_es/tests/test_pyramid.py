@@ -25,7 +25,7 @@ class Todo(Base, ElasticMixin):
     @classmethod
     def elastic_mapping(cls):
         return ESMapping(
-            analyzer='content',
+            # analyzer='content',
             properties=ESMapping(
                 ESString('description', boost=5.0)))
 

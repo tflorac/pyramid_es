@@ -2,7 +2,7 @@ from setuptools import setup, find_packages
 
 
 setup(name='pyramid_es',
-      version='0.3.2.dev',
+      version='0.3.2.dev0',
       description='Elasticsearch integration for Pyramid.',
       long_description=open('README.rst').read(),
       classifiers=[
@@ -31,5 +31,5 @@ setup(name='pyramid_es',
       license='MIT',
       packages=find_packages(),
       test_suite='nose.collector',
-      tests_require=['nose'],
+      tests_require=['nose', 'webtest'],
       zip_safe=False)

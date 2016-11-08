@@ -12,7 +12,7 @@ from .result import ElasticResult
 
 log = logging.getLogger(__name__)
 
-ARBITRARILY_LARGE_SIZE = 100000
+ARBITRARILY_LARGE_SIZE = 10000
 
 
 def generative(f):
@@ -61,6 +61,7 @@ class ElasticQuery(object):
         self.suggests = {}
         self.sorts = OrderedDict()
         self.facets = {}
+        self.aggregates = {}
 
         self._size = None
         self._start = None
@@ -72,6 +73,7 @@ class ElasticQuery(object):
         s.suggests = s.suggests.copy()
         s.sorts = s.sorts.copy()
         s.facets = s.facets.copy()
+        s.aggregates = s.aggregates.copy()
         return s
 
     @staticmethod
@@ -205,6 +207,40 @@ class ElasticQuery(object):
         })
 
     @generative
+    def add_aggregate(self, aggregate):
+        """
+        Add a query aggregate, to return data used for the implementation of
+        aggregated
+        """
+        self.aggregates.update(aggregate)
+
+    def add_term_aggregate(self, name, field):
+        """
+        Add a new basic term aggregate
+        """
+        return self.add_aggregate({
+            name: {
+                'terms': {
+                    'field': field
+                }
+            }
+        })
+
+    def add_date_aggregate(self, name, field, bucket='date_histogram', interval='month', format='MM/yyyy'):
+        """
+        Add a date aggregate
+        """
+        return self.add_aggregate({
+            name: {
+                bucket: {
+                    'field': field,
+                    'interval': interval,
+                    'format': format
+                }
+            }
+        })
+
+    @generative
     def add_term_suggester(self, name, field, text, sort='score',
                            suggest_mode='missing'):
         self.suggests[name] = {
@@ -265,6 +301,8 @@ class ElasticQuery(object):
         }
         if self.facets:
             body['facets'] = self.facets
+        if self.aggregates:
+            body['aggs'] = self.aggregates
         if self.suggests:
             body['suggest'] = self.suggests
 

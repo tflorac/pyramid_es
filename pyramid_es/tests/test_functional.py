@@ -339,6 +339,19 @@ class TestQuery(TestCase):
         self.assertEqual(terms[0]['count'], 3)
         self.assertEqual(terms[0]['term'], 'mystery')
 
+    def test_add_term_aggregate(self):
+        q = self.client.query(Movie).\
+            add_term_aggregate(name='genre_hist',
+                               field='genre_title')
+
+        result = q.execute()
+        aggregates = result.aggregates
+        self.assertEqual(list(aggregates.keys()), ['genre_hist'])
+        buckets = aggregates['buckets']
+
+        pprint(buckets)
+        self.assertEqual(len(buckets), 3)
+
     def test_raw_query(self):
         raw_query = {'match_all': {}}
         q = self.client.query(Movie, q=raw_query)

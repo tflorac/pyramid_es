@@ -23,7 +23,7 @@ class Genre(Base, ElasticMixin):
     @classmethod
     def elastic_mapping(cls):
         return ESMapping(
-            analyzer='content',
+            # analyzer='content',
             properties=ESMapping(
                 ESString('title', boost=5.0)))
 
@@ -52,7 +52,7 @@ class Movie(Base, ElasticMixin):
     @classmethod
     def elastic_mapping(cls):
         return ESMapping(
-            analyzer='content',
+            # analyzer='content',
             properties=ESMapping(
                 ESString('title', boost=5.0),
                 ESString('director'),
