@@ -345,9 +345,9 @@ class TestQuery(TestCase):
                                field='genre_title')
 
         result = q.execute()
-        aggregates = result.aggregates
-        self.assertEqual(list(aggregates.keys()), ['genre_hist'])
-        buckets = aggregates['buckets']
+        aggregations = result.aggregations
+        self.assertEqual(list(aggregations.keys()), ['genre_hist'])
+        buckets = aggregations['buckets']
 
         pprint(buckets)
         self.assertEqual(len(buckets), 3)
