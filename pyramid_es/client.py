@@ -309,6 +309,8 @@ class ElasticClient(object):
                       body=doc,
                       doc_type=doc_type,
                       id=id)
+        if '__pipeline__' in doc:
+            kwargs['pipeline'] = doc.pop('__pipeline__')
         if parent:
             kwargs['parent'] = parent
         self.es.index(**kwargs)
