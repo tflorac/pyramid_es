@@ -2,7 +2,7 @@ from setuptools import setup, find_packages
 
 
 setup(name='pyramid_es',
-      version='0.3.2.dev0',
+      version='0.3.2.dev1',
       description='Elasticsearch integration for Pyramid.',
       long_description=open('README.rst').read(),
       classifiers=[
@@ -26,7 +26,7 @@ setup(name='pyramid_es',
           'transaction',
           'sqlalchemy>=0.8',
           'six>=1.5.2',
-          'elasticsearch>=1.0.0,<2.0.0',
+          'elasticsearch',
       ],
       license='MIT',
       packages=find_packages(),
